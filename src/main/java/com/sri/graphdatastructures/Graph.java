@@ -2,10 +2,10 @@ package com.sri.graphdatastructures;
 
 import com.sri.datastructures.DisjointSet;
 import com.sri.datastructures.MinPriorityQueue;
-import com.sri.main.DataStructureTest;
 import com.sri.utility.KVPair;
 import com.sri.datastructures.List;
 import com.sri.datastructures.Queue;
+import static com.sri.utility.StringUtilities.stringCompare;
 import dataStructures.RBTree;
 import java.util.Iterator;
 
@@ -30,7 +30,7 @@ public class Graph implements Comparable<Graph>, Iterable<Vertex<?>> {
 
     public Vertex<?> search(String l) {
         for (Vertex<?> v : vertices) {
-            if (DataStructureTest.stringCompare(v.getVertexLabel(), l) == 0) {
+            if (stringCompare(v.getVertexLabel(), l) == 0) {
                 return v;
             }
         }

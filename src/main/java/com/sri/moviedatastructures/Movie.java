@@ -3,6 +3,7 @@ package com.sri.moviedatastructures;
 import com.sri.main.DataStructureTest;
 import com.sri.graphdatastructures.VertexIntf;
 import com.sri.graphdatastructures.VertexType;
+import static com.sri.utility.StringUtilities.stringCompare;
 
 /*
  * Movie
@@ -95,7 +96,7 @@ public class Movie extends Object implements Comparable<Movie>, VertexIntf {
     }
 
     public boolean equals(Object anotherMovie) {
-        if (DataStructureTest.stringCompare(name, ((Movie) anotherMovie).name) == 0) {
+        if (stringCompare(name, ((Movie) anotherMovie).name) == 0) {
             return true;
         } else {
             return false;
@@ -104,7 +105,7 @@ public class Movie extends Object implements Comparable<Movie>, VertexIntf {
 
     @Override
     public int compareTo(Movie o) {
-        return DataStructureTest.stringCompare(getName(), o.getName());
+        return stringCompare(getName(), o.getName());
     }
 
     @Override

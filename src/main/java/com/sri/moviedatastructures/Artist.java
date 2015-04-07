@@ -7,6 +7,7 @@ import com.sri.graphdatastructures.VertexType;
 import java.util.Iterator;
 
 import com.sri.datastructures.List;
+import static com.sri.utility.StringUtilities.stringCompare;
 
 public class Artist extends Object implements Comparable<Artist>, VertexIntf, Iterable<Movie> {
 
@@ -89,13 +90,13 @@ public class Artist extends Object implements Comparable<Artist>, VertexIntf, It
 
     @Override
     public int compareTo(Artist o) {
-        return DataStructureTest.stringCompare(getFirstName(), o.getFirstName());
+        return stringCompare(getFirstName(), o.getFirstName());
     }
 
     public boolean equals(Object anotherArtist) {
         boolean retVal = false;
-        int v1 = DataStructureTest.stringCompare(getFirstName(), ((Artist) anotherArtist).getFirstName());
-        int v2 = DataStructureTest.stringCompare(getLastName(), ((Artist) anotherArtist).getLastName());
+        int v1 = stringCompare(getFirstName(), ((Artist) anotherArtist).getFirstName());
+        int v2 = stringCompare(getLastName(), ((Artist) anotherArtist).getLastName());
         if (v1 == 0 && v2 == 0) {
             retVal = true;
         }

@@ -5,22 +5,47 @@ import com.sri.graphdatastructures.Graph;
 import com.sri.graphdatastructures.GraphTestNode;
 import com.sri.graphdatastructures.Vertex;
 import com.sri.graphdatastructures.VertexIntf;
+import com.sri.sort.SortType;
+import com.sri.sort.SortUtilities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("unused")
 public class DataStructureTest {
 
     private static final String PERSISTENCE_UNIT_NAME = "database_basics";
+    private static Integer MAX_NUMBERS = 100;
+    private static Integer ORIGIN = 1;
+    private static Integer UPPER_BOUND = 1000000;
 
     public static void main(String[] args) {
+        
+        //generate random numbers
+        Integer[] unsorted = generateRandomNumber(MAX_NUMBERS);
+        
+        System.out.println(Arrays.toString(unsorted));
+        SortUtilities.insertionSort(unsorted, SortType.ASCENDING);
+        System.out.println(Arrays.toString(unsorted));
+        SortUtilities.insertionSort(unsorted, SortType.DESCENDING);
+        System.out.println(Arrays.toString(unsorted));
     }
 
+    private static Integer[] generateRandomNumber(int maxNumbers) {
+        Integer[] randomNumbers = new Integer[maxNumbers];
+        Random rand = new Random();
+        int[] tmp = rand.ints(maxNumbers, ORIGIN, UPPER_BOUND).toArray();
+        for (int i = 0; i < tmp.length; i++) {
+            randomNumbers[i] = tmp[i];
+        }
+        return randomNumbers;
+    }
     private static void processWeightedGraph(String fileName, List<GraphTestNode> listNodes, Graph myGraph) throws IOException {
         String fileLine;
         Charset cs = Charset.forName("ISO-8859-2");
@@ -145,129 +170,7 @@ public class DataStructureTest {
 //			System.out.println("Error opening input file");
 //		}
 //	}
-    public static int lengthLCS(String x, String y) {
-        int m = x.length();
-        int n = y.length();
-		// create the arrays, they already initialized to 0 so no need
-        // set the elements to 0 as shown in CLR
-        int c[][] = new int[m + 1][n + 1];
 
-        for (int i = 1; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (x.charAt(i) == y.charAt(j)) {
-                    c[i + 1][j + 1] = c[i][j] + 1;
-                } else {
-                    c[i + 1][j + 1] = Math.max(c[i + 1][j], c[i][j + 1]);
-                }
-            }
-        }
-        return c[m][n];
-    }
-
-    public static String LCS(String x, String y) {
-        int m = x.length();
-        int n = y.length();
-		// create the arrays, they already initialized to 0 so no need
-        // set the elements to 0 as shown in CLR
-        int c[][] = new int[m + 1][n + 1];
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (x.charAt(i) == y.charAt(j)) {
-                    c[i + 1][j + 1] = c[i][j] + 1;
-                } else {
-                    c[i + 1][j + 1] = Math.max(c[i + 1][j], c[i][j + 1]);
-                }
-            }
-        }
-
-        // read the substring out from the matrix
-        StringBuffer sb = new StringBuffer();
-        for (int k = x.length(), l = y.length(); k != 0 && k != 0;) {
-            if (c[k][l] == c[k - 1][l]) {
-                k--;
-            } else if (c[k][l] == c[k][l - 1]) {
-                l--;
-            } else {
-                assert x.charAt(k - 1) == y.charAt(l - 1);
-                sb.append(x.charAt(k - 1));
-                k--;
-                l--;
-            }
-        }
-        return sb.reverse().toString();
-    }
-
-    public static int[] subStringMatch3(String mainStr, String subStr) {
-
-        // get the hash values
-        int subLen = subStr.length();
-        int mainLen = mainStr.length();
-        int matches[] = new int[10];
-        int matchIndex = 0;
-
-        // choose a prime number for the hashing function
-        int prime = 71;
-
-        // calculate the hash value;
-        int subStrHash = 0, mainSubStrHash = 0;
-        for (int i = 0; i < subLen; i++) {
-            subStrHash += subStr.charAt(i) * prime ^ subLen;
-        }
-        for (int i = 0; i < subLen - 1; i++) //subtract a 1 from sublen because mainStr[sublen] hash will be added in the for loop below
-        {
-            mainSubStrHash += mainStr.charAt(i) * prime ^ subLen;
-        }
-
-        for (int i = 0; i <= mainLen - subLen; i++) {
-            mainSubStrHash += mainStr.charAt(i + subLen - 1) * prime ^ subLen;
-            if (mainSubStrHash == subStrHash) {
-                String mainSubStr = mainStr.substring(i, i + subLen);
-                if (mainSubStr.compareTo(subStr) == 0) {
-                    matches[matchIndex++] = i;
-                }
-            }
-            mainSubStrHash -= mainStr.charAt(i) * prime ^ subLen;
-        }
-        return matches;
-    }
-
-    public static int stringCompare(String s1, String s2) {
-        if (s1 == null || s2 == null) {
-            return -1;
-        }
-
-        int len1 = s1.length();
-        int len2 = s2.length();
-        if (len1 != len2) //obviously cannot be the same if they are of different lengths
-        {
-            return -1;
-        }
-
-        // choose a prime number for the hashing function
-        int prime = 71;
-
-        // calculate the hash value;
-        int hash1 = 0, hash2 = 0;
-        for (int i = 0; i < len1; i++) {
-            hash1 += s1.charAt(i) * prime ^ len1;
-        }
-        for (int i = 0; i < len2; i++) {
-            hash2 += s2.charAt(i) * prime ^ len1;
-        }
-
-        if (hash1 == hash2) {
-            //now need to check of characters are the same 
-            return s1.compareTo(s2);
-        }
-
-        if (hash1 < hash2) {
-            return -1;
-        } else if (hash1 > hash2) {
-            return 1;
-        }
-        return 0;
-    }
 
     public static int[] mergeSort(int A[], int low, int high) {
         if (low < high) {

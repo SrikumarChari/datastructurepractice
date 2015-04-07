@@ -4,6 +4,7 @@ import com.sri.main.DataStructureTest;
 import java.util.Iterator;
 
 import com.sri.datastructures.List;
+import static com.sri.utility.StringUtilities.stringCompare;
 
 public class Vertex<E extends VertexIntf> implements Comparable<Vertex<?>>, Iterable<Edge> {
 
@@ -41,7 +42,7 @@ public class Vertex<E extends VertexIntf> implements Comparable<Vertex<?>>, Iter
     public boolean equals(Object o) {
         @SuppressWarnings("unchecked")
         Vertex<E> v = (Vertex<E>) o;
-        if (DataStructureTest.stringCompare(getVertexLabel(), v.getVertexLabel()) == 0) {
+        if (stringCompare(getVertexLabel(), v.getVertexLabel()) == 0) {
             return true;
         }
         return false;
@@ -93,7 +94,7 @@ public class Vertex<E extends VertexIntf> implements Comparable<Vertex<?>>, Iter
     //because we are implementing the Comparable class
     @Override
     public int compareTo(Vertex<?> v) {
-        return DataStructureTest.stringCompare(getVertexLabel(), v.getVertexLabel());
+        return stringCompare(getVertexLabel(), v.getVertexLabel());
     }
 
     /*

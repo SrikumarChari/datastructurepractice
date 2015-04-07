@@ -3,6 +3,7 @@ package com.sri.moviedatastructures;
 import com.sri.main.DataStructureTest;
 import com.sri.graphdatastructures.VertexIntf;
 import com.sri.graphdatastructures.VertexType;
+import static com.sri.utility.StringUtilities.stringCompare;
 
 public class Genre implements Comparable<Genre>, VertexIntf {
 
@@ -96,7 +97,7 @@ public class Genre implements Comparable<Genre>, VertexIntf {
     @Override
     public int compareTo(Genre o) {
         //return genre.compareTo(o.genre);
-        return DataStructureTest.stringCompare(getGenre(), o.getGenre());
+        return stringCompare(getGenre(), o.getGenre());
     }
 
     @Override
